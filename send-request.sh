@@ -1,0 +1,1 @@
+curl -v -XGET http://0.0.0.0:${1}/api/v1/hello-world-14
