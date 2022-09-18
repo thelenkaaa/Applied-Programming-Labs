@@ -6,7 +6,7 @@ cd Applied-Programming-Labs
 ```
 ## Prerequisites
 ```
-virtualenv -p python3 venv
+virtualenv -p python3.8 venv
 source venv/bin/activate
 pip3 install -r requirements.txt
 ```
