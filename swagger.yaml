@@ -1,0 +1,947 @@
+openapi: 3.0.3
+info:
+  title: Car Rental
+  version: 1.0.0
+servers:
+  - url: http://localhost5000/api/v1
+    description: Dev server
+tags:
+  - name: Personal Account
+    description: All information about users
+  - name: Car
+    description: All information about cars
+  - name: Rent Company
+    description: All about rental
+paths:
+  /user:
+    post:
+      tags:
+        - Personal Account
+      summary: Create new user
+      description: Create new user
+      operationId: createUser
+      requestBody:
+        description: Created user object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User_creation'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/User_creation'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/User_creation'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /user/login:
+    get:
+      tags:
+        - Personal Account
+      summary: Logs user into the system
+      description: ''
+      operationId: loginUser
+      parameters:
+        - name: username
+          in: query
+          description: The user name for login
+          required: true
+          schema:
+            type: string
+        - name: password
+          in: query
+          description: The password for login in clear text
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error' 
+        '404':
+          description: The resourse is not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error' 
+            
+  /user/logout:
+    get:
+      tags:
+        - Personal Account
+      summary: Logs out current logged in user session
+      description: ''
+      operationId: logoutUser
+      parameters: []
+      responses:
+        '200':
+          description: successful operation
+        '401':
+          description: Unauthorized user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error' 
+      security:
+        - user_auth:
+            - write:user
+            - read:user
+  /user/{username}:
+    get:
+      tags:
+        - Personal Account
+      summary: Get user by user name
+      description: ''
+      operationId: getUserByName
+      parameters:
+        - name: username
+          in: path
+          description: 'The name that needs to be fetched. Use user1 for testing. '
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'          
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Invalid username supplied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error' 
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error' 
+      security:
+        - user_auth:
+            - write:user
+            - read:user
+
+    
+  /user/getbookedcar:
+    get:
+      tags:
+        - Personal Account
+      summary: Get booked cars by user
+      description: ''
+      operationId: getbookedcars
+      parameters: []
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Group' 
+          
+        '401':
+          description: invalid operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error' 
+      security:
+        - user_auth:
+            - write:user
+            - read:user
+  /user/{userId}:
+    put:
+        tags:
+          - Personal Account
+        summary: Update user
+        description: This can only be done by the logged in user.
+        operationId: updateUser
+        parameters:
+          - name: userId
+            in: path
+            description: The name that needs to be deleted
+            required: true
+            schema:
+              type: string
+        requestBody:
+          description: Update an existent user in the store
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User_creation'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/User_creation'
+            application/x-www-form-urlencoded:
+              schema:
+                $ref: '#/components/schemas/User_creation'
+        responses:
+          '200':
+            description: successful operation
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/User'
+              application/xml:
+                schema:
+                  $ref: '#/components/schemas/User'
+          '400':
+            description: Invalid username supplied
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error' 
+          '404':
+            description: User not found
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error' 
+        security:
+          - user_auth:
+              - write:user
+              - read:user
+    delete:
+      tags:
+        - Personal Account
+      summary: Delete user
+      description: This can only be done by the logged in user.
+      operationId: deleteUser
+      parameters:
+        - name: userId
+          in: path
+          description: The name that needs to be deleted
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Invalid username supplied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error' 
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+        - user_auth:
+            - write:user
+            - read:user
+    
+   
+  /car:
+    post:
+      tags:
+        - Car
+      summary: Add a new car to the service
+      description: Add a new car to the service
+      operationId: addCar
+      requestBody:
+        description: Create a new car in the service
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Car'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Car'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Car'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Car'        
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Car'
+        '405':
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+        - carservice_auth:
+            - write:cars
+            - read:cars
+  /carUpdate/{carId}:
+      put:
+        tags:
+          - Car
+        summary: Update car
+        description: Update car
+        operationId: updatecar
+        parameters:
+        - name: carId
+          in: path
+          description: name that need to be updated
+          required: true
+          schema:
+            type: string
+        requestBody:
+          description:  update car
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Car_creation'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Car_creation'
+            application/x-www-form-urlencoded:
+              schema:
+                $ref: '#/components/schemas/Car_creation'
+          required: true
+        responses:
+          '200':
+            description: Successful operation
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Car_creation'          
+              application/xml:
+                schema:
+                  $ref: '#/components/schemas/Car_creation'
+          '405':
+            description: Invalid input
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+        security:
+        - carservice_auth:
+            - write:cars
+            - read:cars
+  /car/findByStatus:
+    get:
+      tags:
+        - Car
+      summary: Finds Car by status
+      description: Multiple status values can be provided with comma separated strings
+      operationId: findCarByStatus
+      parameters:
+        - name: status
+          in: query
+          description: Status values that need to be considered for filter
+          required: false
+          explode: true
+          schema:
+            type: string
+            default: available
+            enum:
+              - available
+              - unavailable
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Car'          
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Car'
+        '400':
+          description: Invalid status value
+          content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+      security:
+        - carservice_auth:
+            - write:cars
+            - read:cars
+      
+  /car/{carId}:
+    get:
+      tags:
+        - Car
+      summary: Find car by ID
+      description: Returns a car
+      operationId: getCarById
+      parameters:
+        - name: carId
+          in: path
+          description: ID of car to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Car'          
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Car'
+        '400':
+          description: Invalid ID supplied
+          content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+        '404':
+          description: Car not found
+          content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+      security:
+        - api_key: []
+        - carservice_auth:
+            - write:cars
+            - read:cars
+    delete:
+      tags:
+        - Car
+      summary: Deletes a car
+      description: delete a car
+      operationId: deleteCar
+      parameters:
+        - name: api_key
+          in: header
+          description: ''
+          required: false
+          schema:
+            type: string
+        - name: carId
+          in: path
+          description: Car id to delete
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '400':
+          description: Invalid car value
+          content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+      security:
+        - carservice_auth:
+            - write:cars
+            - read:cars
+  
+  /rental:
+    post:
+      tags:
+       - Rent Company
+      summary: Rent a car
+      description: Rent a car
+      operationId: rentCar
+      requestBody:
+        description: Create a new rent in the service
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Order'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Order'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Order'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'        
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Order'
+        '405':
+          description: Invalid input
+          content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+        '406':
+          description: Car isn`t available
+          content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+        
+  /rental/book:
+    post:
+        tags:
+         - Rent Company
+        summary: Book a car
+        description: book a car
+        operationId: bookCar
+        requestBody:
+          description: Create a new book in the service
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Book'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Book'
+            application/x-www-form-urlencoded:
+              schema:
+                $ref: '#/components/schemas/Book'
+          required: true
+        responses:
+          '200':
+            description: Successful operation
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Order'        
+              application/xml:
+                schema:
+                  $ref: '#/components/schemas/Order'
+          '405':
+            description: Invalid input
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+          '406':
+            description: Car isn`t available
+            content:
+                application/json:
+                  schema:
+                    $ref: '#/components/schemas/Error'
+    
+  /rental{rentalId}:
+    get:
+      tags:
+        - Rent Company
+      summary: Find rent by ID
+      description: Returns a car
+      operationId: getRentalById
+      parameters:
+        - name: rentalId
+          in: path
+          description: ID of rental to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Car'          
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Car'
+        '400':
+          description: Invalid ID supplied
+          content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+        '404':
+          description: Rental not found
+          content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+      security:
+        - api_key: []
+        - carservice_auth:
+            - write:cars
+            - read:cars
+    delete:
+      tags:
+        - Rent Company
+      summary: Deletes a rental
+      description: delete a rental
+      operationId: deleteRental
+      parameters:
+        - name: api_key
+          in: header
+          description: ''
+          required: false
+          schema:
+            type: string
+        - name: rentalId
+          in: path
+          description: Rental id to delete
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Car'          
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Car'
+        '400':
+          description: Invalid rental value
+          content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+      security:
+        - carservice_auth:
+            - write:cars
+            - read:cars
+  /rental/book{bookId}:
+    delete:
+      tags:
+        - Rent Company
+      summary: Deletes a book
+      description: delete a book
+      operationId: deleteBook
+      parameters:
+        - name: api_key
+          in: header
+          description: ''
+          required: false
+          schema:
+            type: string
+        - name: bookId
+          in: path
+          description: Book id to delete
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Book'          
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Book'
+        '400':
+          description: Invalid rental value
+          content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+      security:
+        - carservice_auth:
+            - write:cars
+            - read:cars
+    
+       
+      
+                  
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        username:
+          type: string
+          example: theUser
+        firstName:
+          type: string
+          example: John
+        lastName:
+          type: string
+          example: James
+        email:
+          type: string
+          example: john@email.com
+        password:
+          type: string
+          example: '12345'
+        phone:
+          type: string
+          example: '12345'
+        driveLicence:
+          type: string
+          example: 'B'
+        userStatus:
+          type: integer
+          description: User Status
+          format: int32
+          example: 1
+        
+          
+      xml:
+        name: user
+    User_creation:
+      type: object
+      properties:
+        username:
+          type: string
+          example: theUser
+        firstName:
+          type: string
+          example: John
+        lastName:
+          type: string
+          example: James
+        email:
+          type: string
+          example: john@email.com
+        password:
+          type: string
+          example: '12345'
+        phone:
+          type: string
+          example: '12345'
+        driveLicence:
+          type: string
+          example: 'B'
+        userStatus:
+          type: integer
+          description: User Status
+          format: int32
+          example: 1
+       
+    Car:
+      required:
+        - mark
+        - photoUrls
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        mark:
+          type: string
+          example: 'Toyota Rav 4'
+        category:
+          type: string
+          example: 'B'
+        price:
+          type: integer
+          format: int64
+          example: 200
+        transmission:
+          type: string
+          example: 'automatic transmission'
+        photoUrls:
+          type: array
+          xml:
+            wrapped: true
+          items:
+            type: string
+            xml:
+              name: photoUrl
+        status:
+          type: string
+          description: pet status in the store
+          enum:
+            - available
+            - unavailable
+      xml:
+        name: car
+    Car_creation:
+      type: object
+      properties:
+        mark:
+          type: string
+          example: 'Toyota Rav 4'
+        category:
+          type: string
+          example: 'B'
+        price:
+          type: integer
+          format: int64
+          example: 200
+        transmission:
+          type: string
+          example: 'automatic transmission'
+        photoUrls:
+          type: array
+          xml:
+            wrapped: true
+          items:
+            type: string
+            xml:
+              name: photoUrl
+        status:
+          type: string
+          description: pet status in the store
+          enum:
+            - available
+            - unavailable
+    Order:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        idCustomer:
+          type: integer
+          format: int64
+          example: 1
+        idCar:
+          type: integer
+          format: int64
+          example: 1
+        rentTime:
+          type: string
+          format: date-time
+        payment:
+          type: boolean
+          example: True
+      xml:
+        name: rental
+    Book:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        idCustomer:
+          type: integer
+          format: int64
+          example: 1
+        idCar:
+          type: integer
+          format: int64
+          example: 1
+        rentTime:
+          type: string
+          format: date-time
+      xml:
+        name: book
+    Group:
+      type: object
+      properties:
+        user:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+        groupId:
+          type: integer
+          format: int64
+          example: 1
+        quantity:
+          type: integer
+        cars:
+          type: array
+          items:
+            $ref: '#/components/schemas/Car'
+        
+        
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      required:
+        - code
+        - message
+    
+    
+  requestBodies:
+    Car:
+      description: Car object that needs to be added to list
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Car'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Car'
+    UserArray:
+      description: List of user object
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/User'
+    
+              
+  securitySchemes:
+    carservice_auth:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: https://carrental3.swagger.io/oauth/authorize
+          scopes:
+            write:cars: modify cars in your account
+            read:cars: read your cars
+    user_auth:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: https://carrental3.swagger.io/oauth/authorize
+          scopes:
+            write:user: modify things as admin
+            read:user: admin
+      
+    api_key:
+      type: apiKey
+      name: api_key
+      in: header
