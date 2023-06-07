@@ -1,20 +1,30 @@
-# Applied-Programming-Labs
-## Clone Project
-```
-git clone https://github.com/thelenkaaa/Applied-Programming-Labs.git
-cd Applied-Programming-Labs
-```
 ## Prerequisites
+1. Update `alembic.ini` file line 58, database/config.py
 ```
-virtualenv -p python3.8 venv
-source venv/bin/activate
+sqlalchemy.url = mysql+mysqlconnector://root:pass@127.0.0.1:3306/mysqldb
+```
+2. Run alembic upgrade command.
+```
+alembic upgrade heads
+```
+3. Install requirements.
+```
 pip3 install -r requirements.txt
 ```
-## Start Server
+4. Populate database tables.
 ```
-sh start-server.sh 5001
+python3 database/initial_database_data.py
 ```
-## Send Request
+
+## Start Flask Application
+The application will run at `127.0.0.1:5044`.
+
+## Run pytest Tests
+1. Run tests.
 ```
-sh send-request.sh 5001
+python3 -m coverage run -m pytest
+```
+2. Run coverage report.
+```
+coverage report 
 ```

@@ -1,0 +1,628 @@
+{
+	"info": {
+		"_postman_id": "7b94967c-1d57-44c2-9639-4b035055f162",
+		"name": "CarRencalCourseWork",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21410735"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "CreateUser",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"admin\",\r\n  \"first_name\": \"Admin\",\r\n  \"last_name\": \"Admin\",\r\n  \"email\": \"admin@gmail.com\",\r\n  \"password\": \"pass\",\r\n  \"phone\": \"admin\",\r\n  \"drive_license\": \"B\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/user",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"user"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "dddd",
+									"disabled": true
+								},
+								{
+									"key": "name",
+									"value": "Nastia",
+									"disabled": true
+								},
+								{
+									"key": "surname",
+									"value": "Viaznikova",
+									"disabled": true
+								},
+								{
+									"key": "email",
+									"value": "nastia@gmail.com",
+									"disabled": true
+								},
+								{
+									"key": "password",
+									"value": "1234567",
+									"disabled": true
+								},
+								{
+									"key": "phone",
+									"value": "326589",
+									"disabled": true
+								},
+								{
+									"key": "address",
+									"value": "2",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "LogIn",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "test_user",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "pass",
+									"type": "string"
+								},
+								{
+									"key": "showPassword",
+									"value": false,
+									"type": "boolean"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "127.0.0.1:5000/user/login",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "LogOut",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY2OTM0MDQ3MCwianRpIjoiNmE0OTFkZTItZDk2Ni00M2QxLTlkMGUtMzU1ZGZiMmM1ZjU3IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IkFkbWluIiwibmJmIjoxNjY5MzQwNDcwLCJleHAiOjE2NjkzODM2NzB9.6JoLpcc2VSfXhZEvIkwda4Z-pMx-W4HluSnSt6K3Crk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY2ODM4NTAyMywianRpIjoiYmVhODZlMjYtMDViOS00YTUyLWEyNTgtNWQ4MTE4YjUwZjE4IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6ImFuYXN0YXNpYSIsIm5iZiI6MTY2ODM4NTAyMywiZXhwIjoxNjY4Mzg1OTIzfQ.dtedhNPmxTJOuQYvI-h_-vA5veJw9Fhi9PES0m-F7vs",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "127.0.0.1:5000/user/logout",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"user",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetUserById",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwicGFzc3dvcmQiOiJwYXNzIn0.UmoY3c7zkUMvsDmpOhXWYQNZTrHst5UpKqXViOmj8F0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY2ODM3MzYxNywianRpIjoiYmNmNWE5YmYtMDQwYy00Y2ZjLWIxZDMtNzVkNGVhMGVjNTIwIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6eyJ1c2VybmFtZSI6ImtfbGV2b25vdmEifSwibmJmIjoxNjY4MzczNjE3LCJleHAiOjE2NjgzNzQ1MTd9.SP2-H50Peyyom2yxyM2hbFb9Zxw_DKZ6Wqzg2enB_Wo",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/user/7888",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"user",
+								"7888"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateUser",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY2OTM0MDQ3MCwianRpIjoiNmE0OTFkZTItZDk2Ni00M2QxLTlkMGUtMzU1ZGZiMmM1ZjU3IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IkFkbWluIiwibmJmIjoxNjY5MzQwNDcwLCJleHAiOjE2NjkzODM2NzB9.6JoLpcc2VSfXhZEvIkwda4Z-pMx-W4HluSnSt6K3Crk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"nasty121\",\n  \"first_name\": \"Anastasia\",\n  \"last_name\": \"Viaznikova\",\n  \"email\": \"iamnasty1112@gmail.com\",\n  \"password\": \"1231265845\",\n  \"phone\": \"123236945\",\n  \"drive_license\": \"B\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "127.0.0.1:5000/user/541",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"user",
+								"541"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY2OTM0MDQ3MCwianRpIjoiNmE0OTFkZTItZDk2Ni00M2QxLTlkMGUtMzU1ZGZiMmM1ZjU3IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IkFkbWluIiwibmJmIjoxNjY5MzQwNDcwLCJleHAiOjE2NjkzODM2NzB9.6JoLpcc2VSfXhZEvIkwda4Z-pMx-W4HluSnSt6K3Crk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:5000/user/541",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"user",
+								"541"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Car",
+			"item": [
+				{
+					"name": "CreateCar",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY2OTMzMTAzNCwianRpIjoiOWVkMjAwNDQtMTg2Mi00MzlkLWIyMmMtZDRkY2ZjN2FjMzIwIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6Im5hc3R5MTIxIiwibmJmIjoxNjY5MzMxMDM0LCJleHAiOjE2NjkzNzQyMzR9.xeLK8hBWd9S8xc6vv8caZgLnSE-0LX4AqA_ofCChaYE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"mark\": \"Toyota\",\r\n  \"category\": \"SUV\",\r\n  \"price\": 10000,\r\n  \"transmission\": \"L\",\r\n  \"status\": \"available\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "127.0.0.1:5000/car",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"car"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateCar",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY2OTMzMTAzNCwianRpIjoiOWVkMjAwNDQtMTg2Mi00MzlkLWIyMmMtZDRkY2ZjN2FjMzIwIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6Im5hc3R5MTIxIiwibmJmIjoxNjY5MzMxMDM0LCJleHAiOjE2NjkzNzQyMzR9.xeLK8hBWd9S8xc6vv8caZgLnSE-0LX4AqA_ofCChaYE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"price\": 3600\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "127.0.0.1:5000/car/65",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"car",
+								"65"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetCarByStatus",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY2OTMzOTc3NywianRpIjoiZWY1M2UzMjEtY2NkYi00ZTQzLWJiMDUtMDQ4YTgyNzFhZmFlIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6Im5hc3R5MTIiLCJuYmYiOjE2NjkzMzk3NzcsImV4cCI6MTY2OTM4Mjk3N30.s7ymVkvmedJW97Z7U-DyWE9O2RSinYE9LfWSKC1nGcU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "127.0.0.1:5000/car/getByStatus?status=available",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"car",
+								"getByStatus"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "available"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetCarById",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY2OTMzOTc3NywianRpIjoiZWY1M2UzMjEtY2NkYi00ZTQzLWJiMDUtMDQ4YTgyNzFhZmFlIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6Im5hc3R5MTIiLCJuYmYiOjE2NjkzMzk3NzcsImV4cCI6MTY2OTM4Mjk3N30.s7ymVkvmedJW97Z7U-DyWE9O2RSinYE9LfWSKC1nGcU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "127.0.0.1:5000/car/65",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"car",
+								"65"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteCar",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY2OTMzOTc3NywianRpIjoiZWY1M2UzMjEtY2NkYi00ZTQzLWJiMDUtMDQ4YTgyNzFhZmFlIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6Im5hc3R5MTIiLCJuYmYiOjE2NjkzMzk3NzcsImV4cCI6MTY2OTM4Mjk3N30.s7ymVkvmedJW97Z7U-DyWE9O2RSinYE9LfWSKC1nGcU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "127.0.0.1:5000/car/65",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"car",
+								"65"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Rental",
+			"item": [
+				{
+					"name": "CreateOrder",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY2OTMzOTc3NywianRpIjoiZWY1M2UzMjEtY2NkYi00ZTQzLWJiMDUtMDQ4YTgyNzFhZmFlIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6Im5hc3R5MTIiLCJuYmYiOjE2NjkzMzk3NzcsImV4cCI6MTY2OTM4Mjk3N30.s7ymVkvmedJW97Z7U-DyWE9O2RSinYE9LfWSKC1nGcU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"payment\" : 1442,\r\n    \"car_id\": 22\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "127.0.0.1:5000/rental",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"rental"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetOrder",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY2OTMzOTc3NywianRpIjoiZWY1M2UzMjEtY2NkYi00ZTQzLWJiMDUtMDQ4YTgyNzFhZmFlIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6Im5hc3R5MTIiLCJuYmYiOjE2NjkzMzk3NzcsImV4cCI6MTY2OTM4Mjk3N30.s7ymVkvmedJW97Z7U-DyWE9O2RSinYE9LfWSKC1nGcU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "127.0.0.1:5000/rental/4035",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"rental",
+								"4035"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetRentedCarByUser",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY2OTMzOTc3NywianRpIjoiZWY1M2UzMjEtY2NkYi00ZTQzLWJiMDUtMDQ4YTgyNzFhZmFlIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6Im5hc3R5MTIiLCJuYmYiOjE2NjkzMzk3NzcsImV4cCI6MTY2OTM4Mjk3N30.s7ymVkvmedJW97Z7U-DyWE9O2RSinYE9LfWSKC1nGcU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "127.0.0.1:5000/rental/getRentedCars/19",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"rental",
+								"getRentedCars",
+								"19"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteOrder",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY2OTMzOTc3NywianRpIjoiZWY1M2UzMjEtY2NkYi00ZTQzLWJiMDUtMDQ4YTgyNzFhZmFlIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6Im5hc3R5MTIiLCJuYmYiOjE2NjkzMzk3NzcsImV4cCI6MTY2OTM4Mjk3N30.s7ymVkvmedJW97Z7U-DyWE9O2RSinYE9LfWSKC1nGcU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "127.0.0.1:5000/rental/4035",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"rental",
+								"4035"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "jwt_token",
+			"value": "JWT"
+		}
+	]
+}
