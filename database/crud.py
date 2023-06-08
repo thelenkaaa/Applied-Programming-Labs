@@ -161,13 +161,19 @@ def delete_car(car_id: int) -> int:
     return car_id
 
 
-def create_order(user_id: int, car_id: int, payment: int) -> int:
+def create_order(user_id: int, car_id: int, country, city, address, amount_days, color, renttime) -> int:
     session = DBManager().session()
+
     order_record = OrderSchema(
         order_id=random.randint(1, 10000),
         user_id=user_id,
         car_id=car_id,
-        payment=payment,
+        country=country,
+        city=city,
+        address=address,
+        amount_days=amount_days,
+        color=color,
+        renttime=renttime
     )
     order_id = copy.deepcopy(order_record.order_id)
     session.add(order_record)
