@@ -1,5 +1,7 @@
 from marshmallow import Schema, fields, validate
 from flask_marshmallow import Marshmallow
+from datetime import datetime
+
 ma = Marshmallow()
 
 CAR_STATUSES = ['available', 'unavailable']
@@ -19,7 +21,13 @@ class CarCreation(Schema):
 
 class OrderCreation(Schema):
     car_id = fields.Integer()
-    payment = fields.Integer()
+    user_id = fields.Integer()
+    country = fields.String()
+    city = fields.String()
+    address = fields.String()
+    amount_days = fields.Integer()
+    color = fields.String()
+    renttime = fields.String()
 
 
 class UserInfo(Schema):

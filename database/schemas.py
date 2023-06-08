@@ -44,12 +44,15 @@ class OrderSchema(Base):
     __tablename__ = 'orders'
 
     order_id = Column(Integer, primary_key=True)
-    renttime = Column(DateTime, nullable=False, default=datetime.utcnow)
-    renttime_start = Column(DateTime, nullable=False, default=datetime.utcnow)
-    renttime_end = Column(DateTime, nullable=False, default=datetime.utcnow)
     user_id = Column(Integer, ForeignKey(UserSchema.user_id))
     car_id = Column(Integer, ForeignKey(CarSchema.car_id))
-    payment = Column(Integer, nullable=False)
+    country = Column(String(20), nullable=False)
+    city = Column(String(20), nullable=False)
+    address = Column(String(20), nullable=False)
+    amount_days = Column(Integer, nullable=False)
+    color = Column(String(20), nullable=False)
+    renttime = Column(String(20), nullable=False)
+
 
     order1 = relationship(UserSchema, backref='orders', lazy="joined", foreign_keys=[user_id])
     order2 = relationship(CarSchema, backref='orders', lazy="joined", foreign_keys=[car_id])

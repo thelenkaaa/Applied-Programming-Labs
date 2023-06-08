@@ -1,4 +1,4 @@
-from flask_jwt_extended import jwt_required, get_jwt_identity
+from flask_jwt_extended import jwt_required, get_jwt_identity, current_user
 from flask import Blueprint, request, make_response, Response
 from marshmallow import ValidationError
 from typing import List
@@ -14,26 +14,43 @@ import database.crud as db
 rental_api = Blueprint('rental', 'rental_api')
 
 
+def compose_response(code: int, message=None, data=None):
+    response = {
+        "status": code,
+        "statusText": message if message else "",
+        "data": data if data else {}
+    }
+    return response
+
 @rental_api.route("", methods=["POST"])
 @jwt_required()
 @user_api_authorize
 def create_order() -> Response:
     request_json = request.get_json()
 
-    username: str = get_jwt_identity()
-    user: UserSchema = db.get_user(query_id=username, by=UserSchema.username)
+    user: UserSchema = current_user
     try:
         # Validate request input.
         order: dict = OrderCreation().load(request_json)
         # Create database record.
-        order_id = db.create_order(user_id=user.user_id, car_id=order.get("car_id"), payment=order.get("payment"))
+        order_id = db.create_order(
+            car_id=order.get("car_id"),
+            user_id=user.user_id,
+            country=order.get("country"),
+            city=order.get("city"),
+            address=order.get("address"),
+            amount_days=order.get("amount_days"),
+            color=order.get("color"),
+            renttime=order.get("renttime")
+        )
     except (ValidationError, sql_exception.IntegrityError) as e:
-        response = {
-            "code": BAD_REQUEST,
-            "message": f"Server crashed with the following error: {str(e)}"
-        }
-        return make_response(response, BAD_REQUEST)
-    return make_response({"orderId": order_id}, OK)
+        return make_response(compose_response(
+              code=BAD_REQUEST,
+              message=f"Server crashed with following error: {e}"), BAD_REQUEST)
+    return make_response(compose_response(
+        code=OK,
+        message='Order is successful',
+        data={"orderId": order_id}), OK)
 
 
 @rental_api.route("/<int:order_id>", methods=["GET"])
@@ -66,11 +83,12 @@ def delete_order(order_id) -> Response:
     return make_response({"orderId": order_id}, OK)
 
 
-@rental_api.route("/getRentedCars/<int:user_id>", methods=["GET"])
+@rental_api.route("/getRentedCars", methods=["GET"])
 @jwt_required()
 @user_api_authorize
-def get_rented_cars(user_id) -> Response:
-    orders: List[OrderSchema] = db.get_orders_by_userid(user_id=user_id)
+def get_rented_cars() -> Response:
+    user: UserSchema = current_user
+    orders: List[OrderSchema] = db.get_orders_by_userid(user_id=user.user_id)
     if not orders:
         response = {
             "code": BAD_REQUEST,

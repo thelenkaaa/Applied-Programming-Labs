@@ -144,52 +144,6 @@ def update_user() -> Response:
         data={"userId": user_id}), OK)
 
 
-# @user_api.route("/updateMe", methods=["PUT"])
-# @jwt_required()
-# @user_api_authorize
-# def update_user() -> Response:
-#     user_id: UserSchema = current_user.user_id
-#
-#     if not user_id:
-#         response = {
-#             "code": BAD_REQUEST,
-#             "message": "There is no such user"
-#         }
-#         return make_response(response, BAD_REQUEST)
-#
-#     if not request.is_json:
-#         response = {
-#             "code": BAD_REQUEST,
-#             "message": "Request payload must be a JSON object"
-#         }
-#         return make_response(response, BAD_REQUEST)
-#
-#     user_data = request.get_json()
-#
-#     user_schema = UserSchema()
-#     errors = user_schema.validate(user_data)
-#     if errors:
-#         response = {
-#             "code": BAD_REQUEST,
-#             "message": "Invalid request payload",
-#             "errors": errors
-#         }
-#         return make_response(response, BAD_REQUEST)
-#
-#     user_id = db.update_user(
-#         user_id=user_id,
-#         username=user_data.get('username'),
-#         first_name=user_data.get('name'),
-#         last_name=user_data.get('surname'),
-#         email=user_data.get('email'),
-#         password=generate_password_hash(user_data.get('password')) if user_data.get('password') else None,
-#         phone=user_data.get('phone'),
-#         drive_license=user_data.get('drive_license')
-#     )
-#
-#     return make_response({"userId": user_id}, OK)
-
-
 @user_api.route("/deleteMe", methods=["DELETE"])
 @jwt_required()
 @user_api_authorize
@@ -206,17 +160,3 @@ def delete_user() -> Response:
     user_id = db.delete_user(user_id)
     return make_response({"userId": user_id}, OK)
 
-# @user_api.route("/<user_id>", methods=["DELETE"])
-# @jwt_required()
-# @user_api_authorize
-# def delete_user(user_id) -> Response:
-#     user_record: UserSchema = db.get_user(user_id)
-#     if not user_record:
-#         response = {
-#             "code": BAD_REQUEST,
-#             "message": "There is no such user"
-#         }
-#         return make_response(response, BAD_REQUEST)
-#
-#     user_id = db.delete_user(user_id)
-#     return make_response({"userId": user_id}, OK)
