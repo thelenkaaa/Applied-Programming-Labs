@@ -4,8 +4,6 @@ from sqlalchemy.orm import declarative_base, relationship
 from sqlalchemy.orm import validates
 
 
-
-
 Base = declarative_base()
 
 
